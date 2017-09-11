@@ -1,0 +1,100 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url "https://repo.grails.org/grails/core" }
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.14.2"
+    }
+}
+
+version "0.9.1-SNAPSHOT"
+group "org.ozoneplatform"
+
+apply plugin: 'maven'
+
+apply plugin:"idea"
+apply plugin:"eclipse"
+apply plugin:"org.grails.grails-plugin"
+apply plugin:"org.grails.grails-plugin-publish"
+apply plugin:"asset-pipeline"
+apply plugin:"org.grails.grails-gsp"
+
+ext {
+    grailsVersion = '3.3.0'
+    springBootVersion = '1.5.4.RELEASE'
+}
+
+repositories {
+    mavenLocal()
+    maven { url "https://repo.grails.org/grails/core" }
+}
+
+dependencies {
+    // Default Grails dependencies
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: springBootVersion
+
+    compile group: 'org.grails', name: 'grails-core', version: grailsVersion
+    compile group: 'org.grails', name: 'grails-web-boot', version: grailsVersion
+    compile group: 'org.grails', name: 'grails-logging', version: grailsVersion
+    compile group: 'org.grails', name: 'grails-plugin-rest', version: grailsVersion
+    compile group: 'org.grails', name: 'grails-plugin-databinding', version: grailsVersion
+    compile group: 'org.grails', name: 'grails-plugin-i18n', version: grailsVersion
+    compile group: 'org.grails', name: 'grails-plugin-services', version: grailsVersion
+    compile group: 'org.grails', name: 'grails-plugin-url-mappings', version: grailsVersion
+    compile group: 'org.grails', name: 'grails-plugin-interceptors', version: grailsVersion
+
+    compile group: 'org.grails.plugins', name: 'cache', version: '4.0.0'
+    compile group: 'org.grails.plugins', name: 'async', version: grailsVersion
+    compile group: 'org.grails.plugins', name: 'scaffolding', version: '3.3.3'
+    compile group: 'org.grails.plugins', name: 'gsp', version: grailsVersion
+
+    console group: 'org.grails', name: 'grails-console', version: grailsVersion
+
+    profile group: 'org.grails.profiles', name: 'web-plugin', version: grailsVersion
+
+    provided group: 'org.grails', name: 'grails-plugin-services', version: grailsVersion
+    provided group: 'org.grails', name: 'grails-plugin-domain-class', version: grailsVersion
+
+    runtime group: 'com.bertramlabs.plugins', name: 'asset-pipeline-grails', version: '2.14.2'
+
+    testCompile group: 'org.grails', name: 'grails-gorm-testing-support', version: '1.0.0'
+    testCompile group: 'org.grails', name: 'grails-plugin-testing', version: grailsVersion
+    testCompile group: 'org.grails.plugins', name: 'geb', version: '1.1.1'
+    testCompile group: 'org.grails', name: 'grails-web-testing-support', version: '1.0.0'
+    testRuntime group: 'org.seleniumhq.selenium', name: 'selenium-htmlunit-driver', version: '2.47.1'
+    testRuntime group: 'net.sourceforge.htmlunit', name: 'htmlunit', version: '2.18'
+
+    // Grails plugins
+    compile group: 'org.grails.plugins', name: 'hibernate5', version: '6.1.6'
+}
+
+bootRun {
+    jvmArgs('-Dspring.output.ansi.enabled=always')
+    addResources = true
+}
+
+// enable if you wish to package this plugin as a standalone application
+bootRepackage.enabled = false
+grailsPublish {
+    // TODO: Provide values here
+    user = 'user'
+    key = 'key'
+    githubSlug = 'foo/bar'
+    license {
+        name = 'Apache-2.0'
+    }
+    title = "My Plugin"
+    desc = "Full plugin description"
+    developers = [johndoe:"John Doe"]
+}
+
+
+
+assets {
+    packagePlugin = true
+}
